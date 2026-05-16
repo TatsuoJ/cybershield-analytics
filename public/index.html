@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberShield | Central de Calibração</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/landing.css">
+</head>
+<body>
+
+    <div class="split-layout">
+        <div class="branding-panel" id="interactive-panel">
+            <div class="branding-content">
+                <img src="assets/logo.jpg" alt="CyberShield Analytics" class="logo-hero shadow">
+                <h1 class="display-4 fw-bold text-white mt-4">CyberShield<br><span class="text-accent">Analytics</span></h1>
+                
+                <p class="text-light mt-4 mb-5 branding-description">
+                    Sistema acadêmico de simulação cibernética. Mapeamos vulnerabilidades cognitivas contra ataques de Engenharia Social, transformando falhas críticas em aprendizado ativo.
+                </p>
+                
+                <div class="metrics-grid mt-5">
+                    <div class="metric-card">
+                        <i class="bi bi-crosshair fs-3 text-accent mb-3 d-block"></i>
+                        <h6 class="text-white fw-bold">Telemetria Comportamental</h6>
+                        <p class="small mb-0 text-white-50">Cruzamento de perfil demográfico com tempo de reação em frações de segundo.</p>
+                    </div>
+                    <div class="metric-card">
+                        <i class="bi bi-diagram-3 fs-3 text-accent mb-3 d-block"></i>
+                        <h6 class="text-white fw-bold">Dissecação de Gatilhos</h6>
+                        <p class="small mb-0 text-white-50">Microlearning fundamentado nas heurísticas de persuasão (Urgência e Autoridade).</p>
+                    </div>
+                </div>
+            </div>
+            <div class="branding-footer text-white-50 small mt-4">
+                CyberShield Analytics Team &copy; 2026
+            </div>
+        </div>
+
+        <div class="calibration-panel">
+            <div class="calibration-container">
+                <div class="mb-5">
+                    <span class="badge bg-dark text-accent mb-2 px-3 py-2 border border-secondary">Etapa 1 de 3</span>
+                    <h2 class="fw-bold text-dark">Parâmetros do Alvo</h2>
+                    <p class="text-muted">Defina a demografia do usuário para inicializar a engine de simulação adaptativa no Polo Industrial de Manaus.</p>
+                </div>
+
+                <form id="form-calibracao" onsubmit="initSimEngine(event)">
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label text-uppercase text-secondary fw-bold small-label">Faixa Etária</label>
+                            <select id="idade" class="form-select input-high-end" required>
+                                <option value="" selected disabled>Selecione...</option>
+                                <option value="18-25">18 a 25 anos (Jovem)</option>
+                                <option value="26-40">26 a 40 anos (Adulto)</option>
+                                <option value="41-59">41 a 59 anos (Adulto+)</option>
+                                <option value="60+">60+ anos (Grupo de Risco)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-uppercase text-secondary fw-bold small-label">Instrução Formal</label>
+                            <select id="escolaridade" class="form-select input-high-end" required>
+                                <option value="" selected disabled>Selecione...</option>
+                                <option value="Nenhuma">Sem Instrução Formal</option>
+                                <option value="Fundamental">Ensino Fundamental</option>
+                                <option value="Médio">Ensino Médio</option>
+                                <option value="Superior">Ensino Superior / Pós</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label text-uppercase text-secondary fw-bold small-label">Letramento Digital</label>
+                            <select id="frequencia" class="form-select input-high-end" required>
+                                <option value="" selected disabled>Selecione...</option>
+                                <option value="Baixa">Básico / Dificuldade</option>
+                                <option value="Média">Uso Cotidiano Padrão</option>
+                                <option value="Alta">Avançado / Tech</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 position-relative">
+                            <label class="form-label text-uppercase text-secondary fw-bold small-label">Vetor Geográfico (Bairro)</label>
+                            <input type="text" id="bairro" class="form-control input-high-end" placeholder="Ex: Compensa, Centro..." onkeyup="queryLocation(this.value)" autocomplete="off" required>
+                            <div id="lista-bairros" class="autocomplete-dropdown hidden shadow-lg"></div>
+                        </div>
+                    </div>
+
+                    <div class="risk-alert p-3 rounded-3 mb-4 d-flex align-items-start border">
+                        <input class="form-check-input mt-1 me-3 custom-switch" type="checkbox" id="vitima_anterior">
+                        <div>
+                            <label class="fw-bold text-dark d-block mb-1" for="vitima_anterior" style="cursor: pointer;">Alvo com Histórico de Risco</label>
+                            <span class="small text-muted">Marque esta opção se o perfil já sofreu perdas financeiras ou dados vazados em incidentes anteriores.</span>
+                        </div>
+                    </div>
+
+                    <div id="api-feedback" class="alert hidden text-center small rounded-3 fw-bold"></div>
+
+                    <button type="submit" id="btn-submit" class="btn btn-primary-custom w-100 py-3 fw-bold mt-2">
+                        COMPILAR E INICIAR AMBIENTE (WEBAPP) <i class="bi bi-arrow-right ms-2"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/landing.js"></script>
+</body>
+</html>

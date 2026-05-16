@@ -1,0 +1,80 @@
+:root {
+    --primary-navy: #0b315b;
+    --wa-app-bg: #d1d7db;
+    --wa-panel-bg: #ffffff;
+    --wa-header-bg: #f0f2f5;
+    --wa-border: #e9edef;
+    --wa-chat-bg: #efeae2;
+    --wa-bubble-in: #ffffff;
+    --wa-text-main: #111b21;
+    --wa-text-muted: #667781;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+body { background-color: var(--wa-app-bg); height: 100vh; overflow: hidden; }
+
+.app-wrapper {
+    display: flex; width: 100vw; height: 100vh; max-width: 1600px; margin: 0 auto;
+    background-color: var(--wa-panel-bg); box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.wa-header { height: 65px; background-color: var(--wa-header-bg); }
+.avatar-circle { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+
+.sidebar-panel { width: 30%; min-width: 320px; border-right: 1px solid var(--wa-border); display: flex; flex-direction: column; background: #fff; }
+.contact-list { flex-grow: 1; overflow-y: auto; }
+.contact-item { cursor: pointer; transition: background-color 0.2s; border-bottom: 1px solid #f5f6f6; }
+.contact-item:hover { background-color: #f5f6f6; }
+.contact-item.active { background-color: #f0f2f5; }
+.unread-badge { background-color: #25d366; color: white; border-radius: 50%; padding: 2px 6px; font-size: 11px; font-weight: bold;}
+
+.chat-panel { flex-grow: 1; display: flex; flex-direction: column; position: relative; background: #f8f9fa; }
+.empty-chat-state { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: var(--wa-header-bg); border-bottom: 6px solid var(--primary-navy); }
+.chat-active-wrapper { display: flex; flex-direction: column; height: 100%; width: 100%; }
+.chat-viewport {
+    flex-grow: 1; background-color: var(--wa-chat-bg);
+    background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+    background-size: 400px; opacity: 0.95; padding: 20px 8%; overflow-y: auto; display: flex; flex-direction: column;
+}
+
+.message-row { display: flex; width: 100%; margin-bottom: 12px; }
+.message-row.received { justify-content: flex-start; }
+.wa-bubble { max-width: 75%; padding: 8px 12px 8px 14px; border-radius: 8px 8px 8px 0; font-size: 14.5px; line-height: 1.5; color: var(--wa-text-main); box-shadow: 0 1px 0.5px rgba(11,20,26,.13); background-color: var(--wa-bubble-in); }
+.bubble-time { font-size: 11px; color: var(--wa-text-muted); float: right; margin-top: 8px; margin-left: 10px; }
+.wa-link { color: #027eb5; text-decoration: none; word-break: break-all; font-weight: 500; }
+.wa-link:hover { text-decoration: underline; }
+
+.typing-indicator { display: flex; gap: 4px; padding: 12px 16px; width: fit-content; }
+.typing-dot { width: 6px; height: 6px; background-color: #8696a0; border-radius: 50%; animation: type 1.4s infinite ease-in-out both; }
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+@keyframes type { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+
+.wa-footer { z-index: 10; }
+.btn-action-safe { background-color: white; border: 2px solid #198754; color: #198754; transition: 0.2s; }
+.btn-action-safe:hover { background-color: #198754; color: white; }
+.btn-action-danger { background-color: white; border: 2px solid #dc3545; color: #dc3545; transition: 0.2s; }
+.btn-action-danger:hover { background-color: #dc3545; color: white; }
+
+.system-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(11, 49, 91, 0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); padding: 15px; }
+.analysis-modal { width: 100%; max-width: 650px; max-height: 90vh; overflow-y: auto; }
+.hidden { display: none !important; }
+
+@media (max-width: 768px) {
+    .sidebar-panel { width: 100%; min-width: 100%; }
+    .chat-panel { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 100; }
+    .chat-panel.d-md-flex:not(.d-flex) { display: none !important; }
+    .sidebar-hidden { display: none !important; }
+}
+
+/* --- PAGE TRANSITIONS --- */
+body { animation: pageEntrance 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+body.page-exit { animation: pageExit 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+@keyframes pageEntrance {
+    from { opacity: 0; transform: translateY(15px) scale(0.99); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes pageExit {
+    from { opacity: 1; transform: translateY(0) scale(1); }
+    to { opacity: 0; transform: translateY(-15px) scale(0.99); }
+}

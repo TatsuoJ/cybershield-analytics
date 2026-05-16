@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CyberShield | Ambiente de Simulação</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/webapp.css">
+</head>
+<body>
+
+    <div class="app-wrapper">
+        <aside class="sidebar-panel" id="sidebar">
+            <header class="wa-header px-3 d-flex align-items-center justify-content-between border-bottom">
+                <div class="d-flex align-items-center">
+                    <img src="assets/logo.jpg" class="avatar-circle shadow-sm" alt="User">
+                    <span class="ms-3 fw-bold small text-dark">Painel de Monitoramento</span>
+                </div>
+                <div class="text-secondary fs-5 d-flex gap-3 align-items-center">
+                    <i class="bi bi-filter" style="cursor: pointer;" title="Filtrar"></i>
+                    <i class="bi bi-box-arrow-right text-danger" style="cursor: pointer;" onclick="encerrarSimulacao()" title="Encerrar Simulação"></i>
+                </div>
+            </header>
+            
+            <div class="search-bar p-2 bg-light border-bottom">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+                    <input type="text" class="form-control border-start-0 bg-white shadow-none" placeholder="Monitorar vetores...">
+                </div>
+            </div>
+
+            <div class="contact-list" id="contact-list"></div>
+        </aside>
+
+        <main class="chat-panel d-none d-md-flex" id="chat-area">
+            <div class="empty-chat-state" id="empty-state">
+                <img src="assets/logo.jpg" width="100" class="mb-4 opacity-50 rounded-4" alt="Logo">
+                <h4 class="fw-bold text-dark">CyberShield Web</h4>
+                <p class="text-muted">Selecione um vetor de ataque na lateral para iniciar a simulação comportamental.</p>
+                <span class="badge bg-light text-dark border mt-2"><i class="bi bi-lock-fill text-success me-1"></i> Ambiente Controlado End-to-End</span>
+            </div>
+
+            <div class="chat-active-wrapper hidden" id="chat-active">
+                <header class="wa-header px-3 d-flex align-items-center border-bottom shadow-sm">
+                    <button class="btn btn-link text-dark d-md-none p-0 me-2 fs-4" onclick="closeChatMobile()"><i class="bi bi-arrow-left"></i></button>
+                    <img src="" class="avatar-circle shadow-sm" id="chat-avatar" alt="Contato">
+                    <div class="ms-3 flex-grow-1">
+                        <div class="fw-bold text-dark" id="chat-name" style="font-size: 15px;">Nome</div>
+                        <div class="text-success fw-bold" id="chat-status" style="font-size: 12px;">online</div>
+                    </div>
+                </header>
+
+                <div class="chat-viewport" id="chat-viewport">
+                    <div class="text-center my-3"><span class="badge bg-white text-muted border shadow-sm px-3 py-1">Sessão Criptografada</span></div>
+                </div>
+
+                <footer class="wa-footer p-3 border-top bg-white">
+                    <div id="controles-decisao" class="hidden d-flex flex-column flex-md-row gap-2 justify-content-center w-100">
+                        <button onclick="registrarDecisao('ACERTO')" class="btn btn-action-safe fw-bold flex-grow-1 py-2">
+                            <i class="bi bi-shield-check me-2 fs-5 align-middle"></i> Denunciar Ameaça
+                        </button>
+                        <button onclick="registrarDecisao('ERRO')" class="btn btn-action-danger fw-bold flex-grow-1 py-2">
+                            <i class="bi bi-box-arrow-up-right me-2 fs-5 align-middle"></i> Interagir / Acessar Link
+                        </button>
+                    </div>
+                    <div id="chat-input-fake" class="bg-light border rounded-pill px-4 py-2 text-muted small mt-2 d-flex justify-content-between align-items-center">
+                        <span>O simulador aguarda sua reação à ameaça...</span>
+                        <i class="bi bi-mic-fill fs-5"></i>
+                    </div>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <div id="overlay-radiografia" class="system-overlay hidden">
+        <div class="analysis-modal shadow-lg rounded-4 p-4 p-md-5 bg-white position-relative">
+            <div class="text-center mb-4">
+                <div id="feedback-icon" class="display-1 mb-2"></div>
+                <h3 id="feedback-title" class="fw-bold"></h3>
+                <div class="mt-2 text-muted small">Tempo de Reação Cognitiva: <span id="feedback-time" class="fw-bold text-dark"></span>s</div>
+            </div>
+
+            <div class="theory-box p-4 rounded-3 mb-4 border" style="background-color: #f8f9fa;">
+                <h6 class="fw-bold text-uppercase small mb-3" style="color: #0b315b;"><i class="bi bi-cpu me-2"></i>Análise da Arquitetura do Golpe</h6>
+                <div id="radiografia-texto" class="small text-dark lh-lg"></div>
+            </div>
+
+            <div class="alert alert-info border-0 shadow-sm d-flex align-items-center rounded-3 mb-4">
+                <div class="fs-1 me-3 text-info"><i class="bi bi-lightbulb-fill"></i></div>
+                <div>
+                    <h6 class="fw-bold mb-1 text-dark">Contra-medida Recomendada:</h6>
+                    <p id="dica-texto" class="mb-0 small text-dark"></p>
+                </div>
+            </div>
+
+            <button onclick="window.location.reload()" class="btn btn-dark w-100 py-3 fw-bold rounded-3 shadow">
+                <i class="bi bi-arrow-repeat me-2"></i> RETORNAR AO MONITORAMENTO
+            </button>
+        </div>
+    </div>
+
+    <script src="js/webapp.js"></script>
+</body>
+</html>

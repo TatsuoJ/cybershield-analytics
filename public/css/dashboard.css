@@ -1,0 +1,63 @@
+/**
+ * CyberShield - Analytics Dashboard Styles
+ */
+
+:root {
+    --primary-navy: #0b315b;
+    --accent-green: #40b47c;
+    --danger-red: #dc3545;
+    --warning-yellow: #ffc107;
+}
+
+body { font-family: 'Inter', sans-serif; background-color: #f4f7f6 !important; }
+
+.bg-corporate { background-color: var(--primary-navy); }
+.text-accent { color: var(--accent-green); }
+
+/* KPI Cards */
+.kpi-card { 
+    border-radius: 12px; 
+    border-left: 5px solid var(--primary-navy); 
+    transition: transform 0.2s ease;
+}
+.kpi-card:hover { transform: translateY(-3px); }
+
+.border-danger-custom { border-left-color: var(--danger-red); }
+.border-warning-custom { border-left-color: var(--warning-yellow); }
+.border-success-custom { border-left-color: var(--accent-green); }
+
+.kpi-title { 
+    font-size: 0.75rem; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+    font-weight: 700; 
+    color: #6c757d; 
+}
+.kpi-value { 
+    font-size: 2.2rem; 
+    font-weight: 700; 
+    color: var(--primary-navy); 
+    letter-spacing: -1px;
+}
+
+.kpi-icon {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+}
+
+/* Containers dos Gráficos */
+.chart-container {
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+    height: 100%;
+}
+
+/* Animação do Badge 'Live' */
+.pulse-anim { animation: pulse 2s infinite; }
+@keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+}

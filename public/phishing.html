@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Segurança Bancária - Validação</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/phishing.css">
+</head>
+<body>
+
+    <!-- Header Falso Institucional -->
+    <header class="bank-header">
+        <div class="container d-flex align-items-center justify-content-between h-100">
+            <div class="d-flex align-items-center text-white">
+                <i class="bi bi-bank2 fs-3 me-3"></i>
+                <div>
+                    <h5 class="m-0 fw-bold">Sistema de Segurança Financeira</h5>
+                    <span class="small opacity-75">Ambiente Seguro (SSL)</span>
+                </div>
+            </div>
+            <div class="text-white opacity-75">
+                <i class="bi bi-lock-fill me-1"></i> Proteção Ativada
+            </div>
+        </div>
+    </header>
+
+    <div class="container d-flex align-items-center justify-content-center" style="min-height: calc(100vh - 80px);">
+        <div class="login-box shadow-lg rounded-4 bg-white overflow-hidden">
+            
+            <div class="p-4 p-md-5">
+                <h4 class="fw-bold mb-3" style="color: #0b315b;">Validação de Dispositivo</h4>
+                <p class="text-muted small mb-4">Para regularizar o acesso à sua conta e evitar o bloqueio judicial do seu CPF, confirme suas credenciais abaixo.</p>
+                
+                <!-- Gatilho de Urgência Visual -->
+                <div class="alert alert-warning border-warning d-flex align-items-center rounded-3 mb-4">
+                    <i class="bi bi-exclamation-triangle-fill fs-4 me-3 text-warning"></i>
+                    <div>
+                        <strong class="d-block text-dark">Atenção Crítica</strong>
+                        <span class="small text-dark">Sua chave de segurança expira em: <strong id="timer-urgencia" class="text-danger fs-5">04:59</strong></span>
+                    </div>
+                </div>
+
+                <!-- Formulário com Engenharia de Interface e Máscaras -->
+                <form id="form-phishing" onsubmit="capturarVazamento(event)">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-secondary">CPF do Titular</label>
+                        <input type="text" class="form-control form-control-lg input-bank" id="fake-cpf" placeholder="000.000.000-00" required autocomplete="off" maxlength="14" oninput="maskCPF(this)">
+                    </div>
+                    
+                    <div class="row g-2 mb-3">
+                        <div class="col-8">
+                            <label class="form-label fw-bold small text-secondary">Agência</label>
+                            <input type="text" class="form-control form-control-lg input-bank" placeholder="0000" required autocomplete="off" maxlength="4" oninput="maskAgencia(this)">
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label fw-bold small text-secondary">Conta</label>
+                            <input type="text" class="form-control form-control-lg input-bank" placeholder="00000-0" required autocomplete="off" maxlength="10" oninput="maskConta(this)">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold small text-secondary">Senha de Acesso (6 dígitos)</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control form-control-lg input-bank" id="fake-password" placeholder="******" required autocomplete="off" maxlength="6" pattern="\d{6}" oninput="this.value = this.value.replace(/\D/g, '')">
+                            <span class="input-group-text bg-white border-start-0" style="cursor: pointer;" onclick="togglePassword()">
+                                <i class="bi bi-eye-slash text-muted" id="eye-icon"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btn-submit" class="btn w-100 py-3 fw-bold btn-bank-submit text-white rounded-3 shadow">
+                        CONFIRMAR IDENTIDADE
+                    </button>
+                </form>
+            </div>
+            
+            <div class="bg-light p-3 text-center border-top">
+                <i class="bi bi-shield-check text-success me-1"></i>
+                <span class="small text-muted fw-bold">Certificado Digital Ativo | Verificação Anti-Fraude</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- OVERLAY: O "BUSTED" (Radiografia Pós-Vazamento) -->
+    <div id="overlay-busted" class="busted-overlay hidden">
+        <div class="analysis-modal shadow-lg rounded-4 p-4 p-md-5 bg-white position-relative">
+            
+            <div class="text-center mb-4 busted-header">
+                <div class="display-1 mb-2 text-danger pulse-anim"><i class="bi bi-shield-x"></i></div>
+                <h2 class="fw-bold text-danger text-uppercase tracking-wide">Vazamento Crítico</h2>
+                <p class="text-muted small mt-2">Você forneceu credenciais financeiras em um ambiente simulado hostil.</p>
+            </div>
+
+            <!-- Radiografia do Phishing -->
+            <div class="theory-box p-4 rounded-3 mb-4 border" style="background-color: #fff5f5; border-color: #ffcdd2 !important;">
+                <h6 class="fw-bold text-uppercase small mb-3 text-danger">
+                    <i class="bi bi-search me-2"></i>Por que esse site é falso?
+                </h6>
+                <ul class="small text-dark lh-lg mb-0 ps-3">
+                    <li class="mb-2"><strong>A Ilusão da URL:</strong> Você clicou em um link que dizia ser do banco, mas a URL real no seu navegador não pertence a nenhuma instituição financeira oficial.</li>
+                    <li class="mb-2"><strong>Cronômetro Falso (Urgência):</strong> O contador de 5 minutos é um script simples projetado para causar pânico e impedir que você preste atenção aos detalhes.</li>
+                    <li><strong>Design Clonado:</strong> Golpistas copiam o código visual exato (cores, fontes, logos) para criar o que chamamos de <em>Spoofing de Interface</em>.</li>
+                </ul>
+            </div>
+
+            <button onclick="retornarAoWebapp()" class="btn btn-dark w-100 py-3 fw-bold rounded-3 shadow">
+                <i class="bi bi-journal-check me-2"></i> REGISTRAR APRENDIZADO E VOLTAR
+            </button>
+        </div>
+    </div>
+
+    <script src="js/phishing.js"></script>
+</body>
+</html>
